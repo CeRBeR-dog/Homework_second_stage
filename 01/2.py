@@ -11,3 +11,62 @@
     и выводит в консоль ответ.
 
 '''
+
+
+
+import socket
+from datetime import datetime
+import random
+
+
+
+HOST=('127.0.0.1',7777)
+
+run = True
+
+# def time():
+#     return datetime.now().strftime("%H:%M:%S")
+
+# def rnd(a: int, b:int):
+#     return (f'result: ', random.randint(a, b))
+
+# def stop():
+#     return (f"server stopped".encode())
+    
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+sock.bind(HOST)
+sock.listen()
+
+print('---start---')
+
+while run:
+    print('------listen-------')
+    conn, addr = sock.accept()
+    print(f'---connected from {addr[0]}---')
+
+    print ('----wait data----')
+    data = conn.recv(1024).decode()
+    
+    if data == "time":
+        answer = datetime.now().strftime("%H:%M:%S")
+
+    elif data == "stop":
+        answer = "server stooped"
+        run = False
+    
+    else:
+        answer = "unknown command"
+    
+    conn.send(answer.encode())
+    conn.close()
+
+sock.close()
+print('---stopped---')
+
+    
+        
+    
+
+
