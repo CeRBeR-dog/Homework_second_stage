@@ -22,17 +22,15 @@ import random
 
 HOST=('127.0.0.1',7777)
 
+LOG_FILE = "server.log"
 run = True
 
-# def time():
-#     return datetime.now().strftime("%H:%M:%S")
+def time():
+    return datetime.now().strftime("%H:%M:%S")
 
-# def rnd(a: int, b:int):
-#     return (f'result: ', random.randint(a, b))
-
-# def stop():
-#     return (f"server stopped".encode())
-    
+def rnd(a: int, b:int):
+    return (f'result: {random.randint(a, b)}')
+  
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -48,14 +46,31 @@ while run:
 
     print ('----wait data----')
     data = conn.recv(1024).decode()
+
+    with open(LOG_FILE, "a",encoding="utf-8") as f:
+        f.write(f"{datetime.now} | {data}/n")
     
     if data == "time":
-        answer = datetime.now().strftime("%H:%M:%S")
+        answer = time()
 
     elif data == "stop":
-        answer = "server stooped"
+        answer = "server stopped"
         run = False
-    
+
+    elif data.startswith('rnd'):
+        rnd_list = data.split()
+        if len(rnd_list) == 3:
+            try:
+                a = int(rnd_list[1])
+                b = int(rnd_list[2])
+                answer = rnd(min(a, b), max(a, b))
+
+            except ValueError:
+                answer = "variables must be integers"
+
+        else:
+            answer = "correct entry - rnd a b"
+        
     else:
         answer = "unknown command"
     
