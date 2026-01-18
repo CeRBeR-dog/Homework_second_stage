@@ -68,10 +68,13 @@ def is_file(path):
         if ext in ['jpg','png','gif', 'ico', 'txt', 'html', 'json']:
             return True
     return False 
+
+def time():
+    return datetime.now().strftime('%d.%m.%Y %H:%M:%S')
         
 
 run = True
-now = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
+
 HOST = ('127.0.0.1',7777)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -92,30 +95,33 @@ while run:
         method, path, ver = data.split('\n')[0].split(" ",2)
         print("-----", method, path, ver)
 
-        if is_file(path):
+        if path == '/':
+                send_file('main.html', conn)
+
+        elif is_file(path):
             send_file(path, conn)
         
         else:
-            
-            if path == '/':
-                send_file('main.html', conn)
-            
-            elif path.startswith('/test'):
+                                 
+            if path.startswith('/test'):
                 test_list = path.split("/")
-                html = f"<h1> тест с номером {test_list[1]} запущен <h1>"
+                html = f"<h1> тест с номером {test_list[2]} запущен <h1>"
                 conn.send(OK)
                 conn.send(HEADERS)
                 conn.send(html.encode())
             
             elif path.startswith('/message'):
                 message_list = path.split("/")
-                html = f"<h1> {now} - сообщение от пользователя {message_list[1]} - {message_list[2]} <h1>"
+                html = f"<h1> {time()} - сообщение от пользователя {message_list[2]} - {message_list[3]} <h1>"
                 conn.send(OK)
                 conn.send(HEADERS)
                 conn.send(html.encode())
 
             else:
                 html = f"<h1> пришли неизвестные  данные по HTTP - {path} <h1>"
+                conn.send(OK)
+                conn.send(HEADERS)
+                conn.send(html.encode())
 
 
                 
@@ -123,3 +129,5 @@ while run:
     except Exception as e:
         conn.send(b'-------no http-------')
         print(e)
+
+    conn.close()
