@@ -49,10 +49,18 @@
 
 import socket
 from datetime import datetime
+import os
+import re
+
+def is_http(data):
+    return data.startswith(('GET', 'POST', 'HEAD'))
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def send_file(file_name,conn):
     try:
-        with open(file_name.lstrip('/'), 'rb') as f:
+        full_path = os.path.join(BASE_DIR, file_name.lstrip('/'))
+        with open(full_path, 'rb') as f:
             print(f"send file {file_name}")
             conn.send(OK)
             conn.send(HEADERS)
@@ -71,9 +79,17 @@ def is_file(path):
 
 def time():
     return datetime.now().strftime('%d.%m.%Y %H:%M:%S')
+
+def valid_login(login):
+    return bool(re.fullmatch(r'[A-Za-z0-9]{6,}',login))
+
+def valid_password(password):
+    return len(password) >= 8 and any(symbol.isdigit() for symbol in password)
+
         
 
 run = True
+user = {}
 
 HOST = ('127.0.0.1',7777)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -91,43 +107,76 @@ while run:
     data = conn.recv(4096).decode()
     print(data)
 
-    try:
-        method, path, ver = data.split('\n')[0].split(" ",2)
-        print("-----", method, path, ver)
+    if is_http(data):
+        try:
+            method, path, ver = data.split('\n')[0].split(" ",2)
+            print("-----", method, path, ver)
 
-        if path == '/':
-                send_file('main.html', conn)
+            if path == '/':
+                    send_file('main.html', conn)
 
-        elif is_file(path):
-            send_file(path, conn)
-        
-        else:
-                                 
-            if path.startswith('/test'):
-                test_list = path.split("/")
-                html = f"<h1> тест с номером {test_list[2]} запущен <h1>"
-                conn.send(OK)
-                conn.send(HEADERS)
-                conn.send(html.encode())
+            elif is_file(path):
+                send_file(path, conn)
             
-            elif path.startswith('/message'):
-                message_list = path.split("/")
-                html = f"<h1> {time()} - сообщение от пользователя {message_list[2]} - {message_list[3]} <h1>"
-                conn.send(OK)
-                conn.send(HEADERS)
-                conn.send(html.encode())
+            else:
+                                    
+                if path.startswith('/test'):
+                    test_list = path.split("/")
+                    html = f"<h1> тест с номером {test_list[2]} запущен <h1>"
+                    conn.send(OK)
+                    conn.send(HEADERS)
+                    conn.send(html.encode())
+                
+                elif path.startswith('/message'):
+                    message_list = path.split("/")
+                    html = f"<h1> {time()} - сообщение от пользователя {message_list[2]} - {message_list[3]} <h1>"
+                    conn.send(OK)
+                    conn.send(HEADERS)
+                    conn.send(html.encode())
+
+                else:
+                    html = f"<h1> пришли неизвестные  данные по HTTP - {path} <h1>"
+                    conn.send(OK)
+                    conn.send(HEADERS)
+                    conn.send(html.encode())        
+
+        except Exception as e:
+            conn.send(b'-------no http-------')
+            print(e)
+        
+    else:
+        try :
+            user_list = dict(item.strip().split(':', 1) for item in data.split(';'))
+
+        except ValueError:
+            conn.send(f"не известные данные - {data}")
+
+        command = user_list.get('command')
+        login = user_list.get('login')
+        password = user_list.get('password')
+
+        if command == 'reg':
+            if  login in user:
+                answer = f"{time()} - ошибка регистрации {login} - неверный пароль/логин"
+
+            elif not valid_login(login) or not valid_password(password):
+                answer = f"{time()} - ошибка регистрации {login} - неверный пароль/логин"
 
             else:
-                html = f"<h1> пришли неизвестные  данные по HTTP - {path} <h1>"
-                conn.send(OK)
-                conn.send(HEADERS)
-                conn.send(html.encode())
+                user[login] = password
+                answer = f"{time()} - пользователь {login} зарегистрирован"
+            
+        elif command == 'signin':
+            if user.get(login) == password:
+                answer =f"{time()} - пользователь {login} произведен вход"
+            
+            else:
+                answer = f"{time()} ошибка входа {login} - неверный пароль/логин"
+        
 
+        else:
+            answer = f"пришли неизвестные  данные - {data}"
 
-                
-
-    except Exception as e:
-        conn.send(b'-------no http-------')
-        print(e)
+        conn.send(answer.encode())
 
     conn.close()

@@ -19,10 +19,27 @@ import socket
 
 HOST = ('127.0.0.1', 7777)
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+while 1:
 
-sock.connect(HOST)
-data = sock.recv(4096).decode()
-print(data)
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    print(f"    \n----меню----\n\
+1) command:reg; login:<login>; password:<pass> - для регистрации пользователя \n\
+2) command:signin; login:<login>; password:<pass> - для входа пользователя\n\
+3) stop\n\
+")
 
-sock.close()
+    command = input("Введите команды: ")
+
+    if command =="stop":
+            print("---остановка----")
+            break
+
+    sock.connect(HOST)
+    sock.send(command.encode())
+    data = sock.recv(4096).decode()
+
+    print(f"\nсервер: {data}")
+
+    sock.close()
+
+    
