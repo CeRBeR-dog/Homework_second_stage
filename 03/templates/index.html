@@ -7,11 +7,16 @@
 </head>
 <body>
     <h1>HOME PAGE</h1>
-    <p><h2>Links menu</h2></p>
+    <h2>Links menu</h2>
     <p><a href="/duck/">Duck</a></p>
     <p><a href="/fox/{{rnd}}/">Fox</a></p>
-    <p><a href="">Weather-Minsk</a></p>
-    <p><a href="">Weather</a></p>
+    <p><a href="/weather-minsk/">Weather-Minsk</p>
+    <p></p>
+    <p>Weather-city</p>
+    <form action="/weather/" method="get", onsubmit="location.href = '/weather/' + city.value; return false;">
+       <input type="text" name="city", id="city" placeholder="Enter city" required>
+       <button type="submit">Show weather</button>
+    </form>
     <p><a href="">intersting</a></p>
 
 </body>
