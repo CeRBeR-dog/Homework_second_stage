@@ -24,7 +24,9 @@
 '''
 
 
-from flask import Flask, render_template
+from flask import (Flask, render_template,
+                   session, redirect, url_for)
+
 import requests
 import os
 import random
@@ -34,6 +36,8 @@ BASE_DIR = os.path.dirname(__file__)
 app = Flask(__name__,
             template_folder = os.path.join(BASE_DIR, 'templates'),
             static_folder = os.path.join(BASE_DIR, 'static'))
+
+app.config['SECRET_KEY'] = 'my secret key'
 
 @app.route('/')
 def index():
@@ -112,11 +116,11 @@ def weather_city(city):
 def candle():
     return render_template('candle.html')
 
-@app.route('/regist/')
+@app.route('/regist/', methods = ['GET', 'POST'])
 def regist():
     return render_template('register.html')
 
-@app.route('/sign-up/')
+@app.route('/sign-up/', methods = ['GET', 'POST'])
 def sign_up():
     return render_template('sign_up.html')
 
