@@ -112,6 +112,14 @@ def weather_city(city):
 def candle():
     return render_template('candle.html')
 
+@app.route('/regist/')
+def regist():
+    return render_template('register.html')
+
+@app.route('/sign-up/')
+def sign_up():
+    return render_template('sign_up.html')
+
 
 @app.errorhandler(404)
 def page_not_found(error):

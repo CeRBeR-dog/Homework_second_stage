@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/home_page.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+</head>
+<body>
+    <div class="container_add">
+        <main class="glass-block">
+            <h1>Registration</h1>
+                <form action="" method="post">   
+                    <div class="glass-button">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required placeholder="Name" value="{{name}}" >
+                    </div>
+
+                    <div class="glass-button">
+                        <label for="surname">Surname</label>
+                        <input type="text" id="surname" name="surname" required placeholder="Surname" value="{{surname}}" >
+                    </div>
+
+                    <div class="glass-button">
+                        <label for="login">Login</label>
+                        <input type="text" id="login" name="login" required placeholder="Login" >
+                    </div>
+
+                    <div class="glass-button">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required placeholder="Password"  >
+                    </div>
+
+                    <div class="glass-button">
+                        <button type="submit">Submit</button>
+                        <button type="reset">Reset</button>
+                    </div>
+                    
+                </form>
+        </main>
+    </div>
+
+    
+</body>
+</html>
