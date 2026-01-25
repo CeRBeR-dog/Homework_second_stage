@@ -1,0 +1,82 @@
+body {
+    background: url('https://abrakadabra.fun/uploads/posts/2022-02/1645630119_1-abrakadabra-fun-p-mramornii-fon-s-zolotom-2.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+h1{
+    margin-top: 0;
+    font-weight: 300;
+    font-size: 2rem;
+    letter-spacing: 1px;
+}
+
+.glass-block {
+    background: rgba(233, 225, 154, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    
+    padding: 40px;
+    border-radius: 25px;
+    border: 1px solid rgba(233, 225, 154, 0.3);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    color: rgba(83, 67, 31, 0.795);
+    text-align: center;
+}
+
+.glass-button{
+    display: block;
+    margin: 10px auto;
+
+    padding: 10px 25px;
+    width: 200px;
+    
+    background: rgba(233, 225, 154, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    border-radius: 25px;
+    border: 1px solid rgba(233, 225, 154, 0.2);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    color: rgba(64, 51, 72, 0.795);
+    text-align: center;
+}
+
+.footer-link a {
+    color: rgba(83, 67, 31, 0.867);
+    text-decoration: none;
+    font-size: 1.4rem;
+    opacity: 0.7;
+    transition: 0.3s;
+}
+
+.footer-link a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.instagram{
+    width:90%; 
+    max-width:600px;
+    padding-top: 30px ; 
+    margin: 20px auto;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    box-sizing: border-box;
+}

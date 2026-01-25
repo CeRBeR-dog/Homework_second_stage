@@ -59,7 +59,7 @@ def fox(num):
         data = res.json()
         foxes.append(data.get('image'))
 
-    return render_template('fox.html',  foxes = foxes)
+    return render_template('fox.html',  foxes = foxes, num = num)
 
 @app.route('/weather-minsk/')
 def weather_minsk():
