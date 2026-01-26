@@ -10,20 +10,33 @@
     <div class="container_add">
         <main class="glass-block">
             <h1>Sign-up</h1>
+
+            {% if err %}
+            <ul>
+                
+              <li>{{err}}</li>
+                
+            </ul>
+            {% endif %}
             
             <form action="", method="post">
                 <div class="glass-button">
+
                     <label for="login">Login</label>
                     <input type="text" id="login" name="login" required placeholder="Login" value="{{login}}" >
-                </div>
-
-                <div class="glass-button">
+                
                     <label for="name">Password</label>
                     <input type="password" id="password" name="password" required placeholder="Password" value="{{password}}" >
-                </div>
+                    
+                    <button type="submit">Submit</button>
+                
 
-                <button type="submit">Submit</button>
             </form>
+            
+                <form action="/regist/">
+                    <button type="submit">Registration</button>
+                </form>
+                </div>
         </main>
     </div>
 </body>

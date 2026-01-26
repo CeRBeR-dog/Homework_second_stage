@@ -10,6 +10,12 @@
     <div class="container">
         <main class="glass-block">
             <h1>HOME PAGE</h1>
+            
+            {% if session.user %}
+                <h2>Welcome, {{ session.user.name }} {{session.user.surname}}</h2>
+            {% endif %}
+
+
             <h2>Links menu</h2>
             <div class="glass-button">
                 <div class="footer-link">
@@ -40,6 +46,16 @@
                     <a href="/candle/">Intersting</a>
                 </div>
             </div>
+
+
+            {% if session.user %}
+            <div class="glass-button">
+                <div class="footer-link">
+                    <a href="/logout/">Logout</a>
+                </div>
+            </div>
+            {% else %}
+            <nav>
             <div class="glass-button">
                 <div class="footer-link">
                     <a href="/regist/">Registration</a>
@@ -50,6 +66,8 @@
                     <a href="/sign-up/">Sign-up</a>
                 </div>
             </div>
+            {% endif %}
+            </nav>
         </main>
     </div>
 </body>
