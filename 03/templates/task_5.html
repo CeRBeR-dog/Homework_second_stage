@@ -1,46 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-    table,
-    table * {
-      border: 1px solid #000;
-      /* border-collapse: collapse; */
-      /* border-collapse: separate; */
-    }
-  </style>
-</head>
-<body>
-    <head>
+{% extends 'base.html' %}
 
-    </head>
+{% block header_message %}
+   
+{% endblock %}
 
-    <main>
+{% block content %}
+
         <section>
             <p>Joy of T<sub>E</sub>X</p>
         </section>
 
         <section>
             <blockquote>
-                <h2>Евгений Евтушенко</h2>
-                <p></p>
-                <p>-1955-</p>
-                <p></p>
-                <p>Бывало, спит у ног собака,</p>
-                <p>костер занявшийся гудит,</p>
-                <p>и женщина из полумрака</p>
-                <p>глазами зыбкими глядит.</p>
-                <p></p>
-                <p>потом под пихтою приляжет</p>
-                <p>на куртку рыжию мою</p>
-                <p>и мне,</p>
-                <p>    задумчиво,</p>
-                <p>            скажет:</p>
-                <p>"А ну-ка, спой!.."-</p>
-                <p>            и я спою.</p>
+                <pre>
+                  <big>Евгений Евтушенко</big>
+                
+                        -1955-
+                
+                Бывало, спит у ног собака,
+                костер занявшийся гудит,
+                и женщина из полумрака
+                глазами зыбкими глядит.
+                
+                потом под пихтою приляжет
+                на куртку рыжию мою
+                и мне,
+                  задумчиво,
+                          скажет:
+                "А ну-ка, спой!.."-
+                          и я спою.
+                </pre>
             </blockquote>
         </section>
 
@@ -174,8 +163,57 @@
         <section>
             <h2>Карта сокровищ</h2>
             <hr>
-           <abbr title="карта"><img src="https://img.freepik.com/premium-vector/map-treasures-paper-parchment_8071-3421.jpg" alt="onepiece"></abbr> 
+            <abbr title="карта"><img src="{{url_for('static', filename='images/map.avif')}}" alt="onepiece"></abbr> 
             <p>Пройдено: <progress value="59" max="100"></progress></p>
+        </section>
+
+        <section>
+            <h2>Генераторы</h2>
+            <ul>
+                <li>Цвета</li>
+                <ul>
+                    <li>Color Mixers</li>
+                    <li>Color Tsester</li>
+                    <li>Color Pallet</li>
+                </ul>
+                <li>Фавиконы</li>
+                <ol>
+                    <li>Favicon.cc</li>
+                    <ul>
+                        <li><a href="">Скачать</a></li>
+                        <li><a href="">Демо</a></li>
+                    </ul>
+                    <li>WebLab Favicon</li>
+                </ol>
+                <li>Фоны</li>
+                <ul>
+                    <li>BgMaker</li>
+                    <li>StriperGenerator</li>
+                </ul>
+                <li>Изображения</li>
+                <ol>
+                    <li>Buttonator</li>
+                    <li>AjaxLoad</li>
+                </ol>
+            </ul>
+
+        </section>
+
+        <section>
+            
+<pre>
+<big>Стихотворение</big>
+
+Мириады иаленьких дел
+Пьют по капле гаснущий день,
+А <ins>дела большие</ins> сушит жажда.
+Оставляя все на "потом",
+Прозреваем задним числом,
+Только день <big>не повторится</big> дважды.
+
+И. Тальков
+</pre>
+            
         </section>
 
         <section>
@@ -188,14 +226,20 @@
 
 
         <section>
+            <form action="">
+                <p><label for="Неделя">Неделя</label>
+                <input type="week" id="meeting-time" name="meeting-time" ></p>
+                    
+                <p><label for="Дата и время">Дата и время</label>
+                <input type="datetime-local" id="meeting-time" name="meeting-time"></p>
 
+                <p><label for="Месяц">Месяц</label>
+                <input type="month" id="meeting-time" name="meeting-time" ></p>
+
+                <p><label for="Время">Время</label>
+                <input type="time" id="meeting-time" name="meeting-time"></p>
+            </form>
         </section>
 
-    </main>
-
-    <floor>
-
-    </floor>
     
-</body>
-</html>
+{% endblock %}

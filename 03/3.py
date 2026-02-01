@@ -225,6 +225,10 @@ def logout():
     session.pop('user', None)
     return redirect(url_for('index'))
 
+@app.route('/home_5/')
+def home_5():
+    return render_template('task_5.html', rnd = random_fox())
+
 
 @app.errorhandler(404)
 def page_not_found(err):
