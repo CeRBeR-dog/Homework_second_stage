@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/home_page.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if title %} {{title}} {% else%} Flask1 {%endif%} </title>
+    
+
+</head>
+<body>
+    <header>
+        {% block header_message %}
+        
+        {% endblock %}
+        {% if session.user %}
+        <h3>Welcome, {{ session.user.name }} {{session.user.surname}}</h3>
+        {% endif %}
+    </header>
+    <main>
+        <article>  
+            <p>
+                {% block content %}
+
+                {% endblock %}
+            </p>
+        </article>
+        <aside>
+                    <nav>
+                <div class="glass-button">
+                    <div class="footer-link">
+                        <a href="/duck/">Duck</a>
+                    </div>
+                </div>
+                <div class="glass-button">
+                    <div class="footer-link">
+                        <a href="/fox/{{rnd}}/">Fox</a>
+                    </div>
+                </div>
+                <div class="glass-button">
+                    <div class="footer-link">  
+                        <a href="/weather-minsk/">Weather-Minsk</a>
+                    </div>  
+                </div> 
+                <div class="glass-button">  
+                    <div class="footer-link">
+                        <p>Weather-city</p>
+                        <form action="/weather/" method="get", onsubmit="location.href = '/weather/' + city.value; return false;">
+                        <input type="text" name="city", id="city" placeholder="Enter city" required>
+                        <button type="submit">Show weather</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="glass-button">
+                    <div class="footer-link">
+                        <a href="/candle/">Intersting</a>
+                    </div>
+                </div>
+
+
+                {% if session.user %}
+                <div class="glass-button">
+                    <div class="footer-link">
+                        <a href="/logout/">Logout</a>
+                    </div>
+                </div>
+                {% else %}
+                
+                <div class="glass-button">
+                    <div class="footer-link">
+                        <a href="/regist/">Registration</a>
+                    </div>
+                </div>
+                <div class="glass-button">
+                    <div class="footer-link">
+                        <a href="/sign-up/">Sign-up</a>
+                    </div>
+                </div>
+                {% endif %}
+                
+                </nav>
+        </aside>
+    </main>
+            
+    
+    
+    <footer>
+           
+    </footer>
+
+    
+</body>
+</html>

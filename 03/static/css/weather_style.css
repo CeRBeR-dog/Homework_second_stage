@@ -1,53 +1,25 @@
-body {
-    background: url('https://abrakadabra.fun/uploads/posts/2021-12/thumbs/1639922063_1-abrakadabra-fun-p-fon-dlya-pogodi-1.png');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-    background-size: cover;
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-}
-
-.container {
-    width: 100%;
-    max-width: 900px;
-    padding: 20px;
-    box-sizing: border-box;
-    
-}
-
-h1{
-    margin-top: 0;
-    font-weight: 300;
-    font-size: 2rem;
-    letter-spacing: 1px;
-}
-
-.glass-block {
-    background: rgba(213, 100, 235, 0.2);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-
-    padding: 40px;
-    border-radius: 25px;
-    border: 1px solid rgba(213, 100, 235, 0.3);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-    color: rgba(64, 51, 72, 0.795);
-    text-align: center;
-}
 
 .weather-data{
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     margin: 15px 0;
     font-size: 1.2rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
     padding-bottom: 5px;
 
+}
+@media screen and (min-width: 700px) {
+    .weather-data {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 15px 0;
+        font-size: 1.2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 5px;
+    }
 }
 
 hr {
@@ -56,27 +28,3 @@ hr {
     margin: 20p 0x;
 }
 
-.glass-button{
-    background: rgba(213, 100, 235, 0.2);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-
-    border-radius: 25px;
-    border: 1px solid rgba(213, 100, 235, 0.3);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-    color: rgba(64, 51, 72, 0.795);
-    text-align: center;
-}
-
-.footer-link a {
-    color: rgba(75, 33, 80, 0.867);
-    text-decoration: none;
-    font-size: 1.4rem;
-    opacity: 0.7;
-    transition: 0.3s;
-}
-
-.footer-link a:hover {
-    opacity: 1;
-    text-decoration: underline;
-}

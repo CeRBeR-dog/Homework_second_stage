@@ -1,21 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/home_page.css') }}">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block header_message %}
+   
+{% endblock %}
+
+{% block content %}
+
     <div class="container">
-        <main class="glass-block">
+        <div class="glass-block">
             <h1>HOME PAGE</h1>
             
-            {% if session.user %}
-                <h2>Welcome, {{ session.user.name }} {{session.user.surname}}</h2>
-            {% endif %}
-
-
             <h2>Links menu</h2>
             <div class="glass-button">
                 <div class="footer-link">
@@ -68,7 +62,7 @@
             </div>
             {% endif %}
             </nav>
-        </main>
+        </div>
     </div>
-</body>
-</html>
+
+{% endblock %}

@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/image_page.css') }}">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Duck</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block header_message %}
+    
+{% endblock %}
+
+{% block content %}
+
     <div class="container">
-        <main class="glass-block">
+        <div class="glass-block">
             <h1>Random duck №{{num}}</h1>
             <div class="image_container">
                 <img src={{imag}} alt="duck">
@@ -18,7 +17,7 @@
                     <a href="/">Home</a>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
-</body>
-</html>
+
+{% endblock %}

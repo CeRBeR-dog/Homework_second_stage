@@ -41,6 +41,9 @@ app = Flask(__name__,
 app.config['SECRET_KEY'] = 'my secret key'
 user_db = {}
 
+def random_fox():
+    return random.randint(1, 10)
+
 def login_check():
     return 'user' in session
 
@@ -71,11 +74,11 @@ def valid_regist(form):
     
     return err 
 
-
+@app.route('/base/')
 @app.route('/')
 def index():
-    rnd = random.randint(1, 10)
-    return render_template('index.html', rnd = rnd)
+    return render_template('index.html', rnd = random_fox())
+
 
 @app.route('/duck/')
 def duck():
@@ -86,7 +89,7 @@ def duck():
     img_url = res.json()['url']
     num_img = img_url.split('/')[-1].split('.')[0]
 
-    return render_template('duck.html', num = num_img, imag = img_url)
+    return render_template('duck.html', rnd = random_fox(), num = num_img, imag = img_url)
 
 @app.route('/fox/<int:num>/')
 def fox(num):
@@ -96,13 +99,14 @@ def fox(num):
     if num < 1 or num > 10:
         return f"Only from 1 to 10 is allowed"
 
+    
     foxes = []
     for f in range(num):
         res = requests.get("https://randomfox.ca/floof/")
         data = res.json()
         foxes.append(data.get('image'))
 
-    return render_template('fox.html',  foxes = foxes, num = num)
+    return render_template('fox.html', rnd = random_fox(), foxes = foxes, num = num)
 
 @app.route('/weather-minsk/')
 def weather_minsk():
@@ -121,6 +125,7 @@ def weather_minsk():
     press = res["main"]["pressure"]
 
     return render_template('weather_minsk.html',
+                           rnd = random_fox(),
                            cl = cl,
                            temp = temp,
                            temp_feel = temp_feel,
@@ -131,7 +136,8 @@ def weather_minsk():
 def weather_city(city):
     if not login_check():
         return redirect(url_for('sign_up'))
-   
+    
+    rnd = random_fox()
     url = f'http://api.openweathermap.org/data/2.5/weather'
     params = {'q': city , 'APPID': '2a4ff86f9aaa70041ec8e82db64abf56'}
     res = requests.get(url, params)
@@ -147,6 +153,7 @@ def weather_city(city):
     press = res["main"]["pressure"]
 
     return render_template('weather_city.html',
+                           rnd = random_fox(),
                            city = city,
                            cl = cl,
                            temp = temp,
@@ -159,7 +166,7 @@ def weather_city(city):
 @app.route('/candle/')
 def candle():
     if not login_check():
-        return redirect(url_for('sign_up'))
+        return redirect(url_for('sign_up'), rnd = random_fox())
     
     return render_template('candle.html')
 

@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/image_page.css') }}">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fox</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block header_message %}
+    
+{% endblock %}
+
+{% block content %}
+
     <div class="content">
-         <main class="glass-block">
+         <div class="glass-block">
             <h1>{{num}} pictures of a fox</h1>
             <div class="image_container">
                 {% for fox in foxes%}
@@ -20,7 +19,7 @@
                     <a href="/">Home</a>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
-</body>
-</html>
+    
+{% endblock %}
