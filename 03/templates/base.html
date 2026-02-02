@@ -4,8 +4,8 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/home_page.css') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if title %} {{title}} {% else%} Flask1 {%endif%} </title>
-    
+    <title>{% block title_page %} {% endblock %} </title>
+    {% block another_css %}{% endblock %}
 
 </head>
 <body>
@@ -19,11 +19,9 @@
     </header>
     <main>
         <article>  
-            <p>
-                {% block content %}
+            {% block content %}
 
-                {% endblock %}
-            </p>
+            {% endblock %}
         </article>
         <aside>
                     <nav>

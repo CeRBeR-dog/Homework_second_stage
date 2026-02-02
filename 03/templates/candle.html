@@ -1,14 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/instagram.css') }}">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Candle_nazare</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block header_message %}{% endblock %}
+
+{% block title_page %} Candle_nazare {% endblock %}
+
+{% block another_css %}<link rel="stylesheet" href="{{url_for('static', filename='css/instagram.css') }}"> {% endblock %}
+
+{% block content %}
+
     <div class="container">
-        <main class="glass-block">
+        <div class="glass-block">
             <h1>Instagtam profile</h1>
             
             <blockquote class="instagram-media"
@@ -25,7 +26,7 @@
                 </div>
             </div>
 
-        </main>
+        </div>
     </div>
-</body>
-</html>
+
+{% endblock %}

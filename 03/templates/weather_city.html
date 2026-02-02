@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
-{% block header_message %}
-    
-{% endblock %}
+{% block header_message %}{% endblock %}
+
+{% block title_page %} Weather-{{city}} {% endblock %}
 
 {% block content %}
 
@@ -12,7 +12,6 @@
             <div class="weather-data">
                 <p>Temperature:   {{temp}}°C</p>
                 <p>Feels like:    {{temp_feel}}°C</p>
-                <hr>
                 <p>Cloudiness:  {{cl}}</p>
                 <p>Humidity:      {{humid}}% </p>
                 <p>Pressure:     {{press}}hPa</p>
