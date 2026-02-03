@@ -166,9 +166,9 @@ def weather_city(city):
 @app.route('/candle/')
 def candle():
     if not login_check():
-        return redirect(url_for('sign_up'), rnd = random_fox())
+        return redirect(url_for('sign_up'))
     
-    return render_template('candle.html')
+    return render_template('candle.html', rnd = random_fox())
 
 @app.route('/regist/', methods = ['GET', 'POST'])
 def regist():
