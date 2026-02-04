@@ -76,6 +76,24 @@ footer {
     box-sizing: border-box;
 }
 
+.ticker-container {
+    width: 100%;
+    max-width: 1400px;
+    padding: 10px 20px;
+
+    background: rgba(233, 225, 154, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    
+    border: 1px solid rgba(233, 225, 154, 0.3);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+
+    color: rgba(83, 67, 31, 0.9);
+    font-size: 1.2rem;
+    overflow: hidden;
+}
+
 h1{
     margin-top: 0;
     font-weight: 300;
