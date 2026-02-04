@@ -21,11 +21,11 @@ main {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1400px;
 }
 
-article {
-    flex: 2 2 12em;
+section {
+    flex: 2 2 14em;
     padding: 1em;
 }
 
@@ -43,7 +43,7 @@ footer {
 
 @media screen and (min-width: 770px) {
     body {
-            min-height: 100vh;
+        min-height: 100vh;
         }
     main {
         flex-direction: row;
@@ -51,14 +51,13 @@ footer {
         flex: 1 1 auto;
         }
 
-    article {
+    section {
         flex: 1;
     }
     aside {
-        width: 260px;
-        flex-shrink: 0;
+        flex: 0.1 0;        
         position: sticky;
-        top: 20px;
+        top: 5px;
         align-self: flex-start;
     }
 }
@@ -99,9 +98,6 @@ h3{
     color: rgba(83, 67, 31, 0.795);
 }
 
-section{
-    
-}
 
 .glass-block {
     display: flex;
@@ -119,6 +115,7 @@ section{
     box-shadow: 0 15px 35px rgba(0,0,0,0.4);
     color: rgba(83, 67, 31, 0.795);
     text-align: center;
+    
 }
 
 .glass-button a {
@@ -127,9 +124,9 @@ section{
     align-items: center;
     justify-content: center;
 
-    margin: 10px auto;
-    padding: 10px 25px;
-    width: 150px;
+    margin: auto;
+    padding: auto;
+    width: auto;
     
     background: rgba(233, 225, 154, 0.1);
     backdrop-filter: blur(10px);
@@ -152,7 +149,7 @@ section{
 .footer-link a {
     color: rgba(83, 67, 31, 0.867);
     text-decoration: none;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     opacity: 0.7;
     transition: 0.3s;
 }
