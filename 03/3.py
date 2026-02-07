@@ -182,32 +182,32 @@ def weather_city(city):
                            press = press)
 
 
-# @app.route('/currency/')
-# def currency():
-#     # if not login_check():
-#     #     return redirect(url_for('sign_up'))
+@app.route('/base/')
+def currency():
+    # if not login_check():
+    #     return redirect(url_for('sign_up'))
     
-#     res_d = requests.get('https://api.nbrb.by/exrates/rates/431')
-#     res_d = res_d.json()
-#     usd = res_d["Cur_OfficialRate"]
+    res_d = requests.get('https://api.nbrb.by/exrates/rates/431')
+    res_d = res_d.json()
+    usd = res_d["Cur_OfficialRate"]
 
-#     res_e = requests.get('https://api.nbrb.by/exrates/rates/451')
-#     res_e =res_e.json()
-#     eur = res_e["Cur_OfficialRate"]
+    res_e = requests.get('https://api.nbrb.by/exrates/rates/451')
+    res_e =res_e.json()
+    eur = res_e["Cur_OfficialRate"]
 
-#     res_r = requests.get('https://api.nbrb.by/exrates/rates/456')
-#     res_r =res_r.json()
-#     rus = res_r["Cur_OfficialRate"]
+    res_r = requests.get('https://api.nbrb.by/exrates/rates/456')
+    res_r =res_r.json()
+    rus = res_r["Cur_OfficialRate"]
 
-#     res_c = requests.get('https://api.nbrb.by/exrates/rates/462')
-#     res_c =res_c.json()
-#     cny = res_c["Cur_OfficialRate"]
+    res_c = requests.get('https://api.nbrb.by/exrates/rates/462')
+    res_c =res_c.json()
+    cny = res_c["Cur_OfficialRate"]
 
-#     return render_template('currency.html',
-#                            usd = usd,
-#                            eur = eur,
-#                            rus = rus,
-#                            cny = cny)
+    return render_template('base.html',
+                           usd = usd,
+                           eur = eur,
+                           rus = rus,
+                           cny = cny)
 
 @app.route('/candle/')
 def candle():
@@ -283,4 +283,4 @@ def page_not_found(err):
 
 
 
-# app.run(debug=True, host='0.0.0.0')
+app.run(debug=True, host='0.0.0.0')
