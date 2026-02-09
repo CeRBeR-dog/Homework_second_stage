@@ -1,0 +1,28 @@
+
+<div class="modal" id="modal_one" aria-hidden="true">
+   <a href="" class="a_modal"></a>
+
+   <div class="modal_dialog">
+        <div class="modal_header">
+            <a href="" class="btn_close" aria-hidden="true">x</a>
+            <p>Добавить пользователя</p>
+        </div>
+        <div class="modal_body">
+            <form action="/user_add/" method="post">
+                <label for="user_name">Имя</label>
+                <input type="text" id="user_name" name="user_name">
+                <input type="submit" value="OK">
+            </form>
+
+        </div>
+   </div>
+    
+</div>
+
+<script>
+    window.addEventListener('hashchange', () => {
+        if (window.location.hash === '#modal_one'){
+            setTimeout(() => document.querySelector('#user_name').focus(), 500);
+        }
+    });
+</script>

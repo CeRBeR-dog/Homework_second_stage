@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% include 'user_modal.html'%}
+
+{% block content_head %}
+<div class="quiz_form">
+    <h2>{{qustion.question}}</h2>
+
+    <form action="/qustion/" method="post">
+        <label for="answer1"></label>
+        {% for answer in answers %}
+        <div class="anwer_row">
+            <input type="radio" name="answer_text" 
+            id="radio{{loop.index}}" value="{{answer}}"
+            onchange="this.form.submit()">
+            <label for="radio{{loop.index}}">{{answer}}</label>
+        </div>
+        {%endfor%}
+    </form>
+</div>
+{% endblock %}

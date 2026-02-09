@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% include 'user_modal.html'%}
+
+{% block content_head %}
+    <h2> Квизы </h2>
+    <div>
+        <form action="/quiz/" method="post">
+            <div>
+                <h2> Выберите квиз </h2>
+
+                <select name="quiz" >
+                    {% for q in quizes %}
+                        <option value="{{ q.id }}">{{ q.name }}</option>
+                    
+                    {% endfor %}    
+                </select>
+                <div>
+                    <input class="button" type="submit" value="Начать квиз">
+                </div>
+            </div>
+
+        </form>
+    </div>
+{% endblock %}

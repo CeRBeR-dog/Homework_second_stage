@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% include 'user_modal.html' %}
+
+{% block content_head %}
+    <h2>Поьзователи в базе</h2>
+
+    <div class="users_container">
+
+        {% for user in users %}
+
+            <div class="user_card">
+                <p class="u_num">{{ loop.index }}</p>
+                <p class="u_name">{{ user.name }}</p>
+            </div>
+        
+        {% endfor %}
+
+        <a href="#modal_one">
+            <div class="user_card card_add">
+                <p class="u_info_add">Добавить пользователя</p>
+                <p class="u_add">+</p>
+            </div>
+        </a>
+
+    </div>
+
+{% endblock %}
+    

@@ -67,6 +67,8 @@ def db_add_new_data():
     user_1 = User('Сергей')
     user_2 = User('Аня')
 
+    db.session.add_all([user_1, user_2])
+
     quizes = [
             Quiz("Quiz 1", user_1),
             Quiz("Quiz 2", user_2)
@@ -89,9 +91,9 @@ def db_add_new_data():
     quizes[0].question.append(questions[7])
         
     quizes[1].question.append(questions[4])
-    quizes[0].question.append(questions[2])
-    quizes[0].question.append(questions[6])
-    quizes[0].question.append(questions[0])
+    quizes[1].question.append(questions[2])
+    quizes[1].question.append(questions[6])
+    quizes[1].question.append(questions[0])
 
     db.session.add_all(quizes)
 

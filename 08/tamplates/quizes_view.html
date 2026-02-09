@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+{% block content_head %}
+    <h2>Квизы <a class="button" href="#modal1">+</a></h2>
+
+    <div class="quizes quiz_form">
+        <div class="quiz-row quiz-hrow">
+            <div class="quiz-col">№</div>
+            <div class="quiz-col">Название</div>
+            <div class="quiz-col">Сколько вопросов</div>
+        </div>
+        {% for q in quizes %}
+        <a href="#">
+            <div class="quiz-row">
+                <div class="quiz-col">{{loop.index+1}}</div>
+                <div class="quiz-col">{{q.name}}</div>
+                <div class="quiz-col">{{ q.question|length }}</div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block content_foot %}
+    <h2> Вопросы <a class="button" href="#modal2">+</a></h2>
+
+    <div class="question quiz_form">
+        {% include 'form_question_tab.html' %}
+    </div>
+
+{% endblock %}

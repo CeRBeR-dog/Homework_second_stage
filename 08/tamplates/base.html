@@ -2,34 +2,44 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="{{url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/quiz.css') }}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/modal.css') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <body>
-    <head>
+    <header>
         <nav>
             <ul>
-                {% block main_menu %}
                 {% include 'menu_main.html' %}
-                {% endblock %}
             </ul>
 
         </nav>
 
-    </head>
+    </header>
 
+    <div class="page_content">
     <main>
         
         <section>
 
+            {% block content_head %}
+            
+            {% endblock %}
+
         </section>
 
         <section>
+
+            {% block content_foot %}
+
+            {% endblock %}
             
         </section>
 
     </main>
+    </div>
 
     <footer>
 
