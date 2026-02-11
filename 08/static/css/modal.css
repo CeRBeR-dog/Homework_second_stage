@@ -32,6 +32,12 @@
     font-size: 1.3rem;
 }
 
+.modal_box{
+    max-height:150px; 
+    overflow:auto; 
+    text-align:left;
+}
+
 .btn_close {
     position: absolute;
     top: -8px;

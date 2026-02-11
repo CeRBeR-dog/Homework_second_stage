@@ -112,10 +112,71 @@ def view_result():
 def view_quiz_edit():
     quizes = Quiz.query.all()
     questions = Question.query.all()
+    users = User.query.all()
     return render_template('quizes_view.html',
                            quizes=quizes,
-                           questions=questions
+                           questions=questions,
+                           users = users
                            )
+
+@app.route('/quiz_add/', methods = ['POST'])
+def quiz_add():
+    quiz_name = request.form.get('quiz_name')
+    user_id = request.form.get('user_id')
+    question_ids = request.form.getlist('question_ids')
+
+    if quiz_name and user_id:
+        user = db.session.get(User ,int(user_id))
+        new_quiz = Quiz(quiz_name, user)
+
+        for quiz_id in question_ids:
+            question = db.session.get(Question, int(quiz_id))
+            if question:
+                new_quiz.question.append(question)
+
+        db.session.add(new_quiz)
+        db.session.commit()          
+    
+    return redirect(url_for('view_quiz_edit'))
+
+# app.route('/quiz_edit/<int:quiz_id>/', methods = ['GET', 'POST'])
+# def quiz_edit(quiz_id):
+#     quiz = db.session.get(Quiz, quiz_id)
+#     if request.method == 'POST':
+#         quiz.name = request.form['quiz_name']
+#         db.session.commit()
+#         return redirect(url_for('view_quiz_edit'))
+#     return render_template('quiz_edit.html', quiz = quiz)
+
+@app.route('/question_add/', methods = ['POST'])
+def question_add():
+    question_text = request.form.get('question_text')
+    correct_idx = int(request.form.get('correct_answer'))
+
+    answers = [
+        request.form.get('answear1'),
+        request.form.get('answear2'),
+        request.form.get('answear3'),
+        request.form.get('answear4')
+    ]  
+
+    if question_text and all(answers):
+        correct_answ = answers[correct_idx-1]
+        wrong_answ = [ans for i, ans in enumerate(answers) if i != correct_idx -1]
+
+        new_quest = Question(
+            question=question_text,
+            answer=correct_answ,
+            wrong1=wrong_answ[0],
+            wrong2=wrong_answ[1],
+            wrong3=wrong_answ[2]
+        )
+
+        db.session.add(new_quest)
+        db.session.commit()  
+                
+    
+    return redirect(url_for('view_quiz_edit'))
 
 
 

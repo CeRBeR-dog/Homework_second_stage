@@ -1,0 +1,42 @@
+<div class="modal" id="modal2" aria-hidden="true">
+   <a href="" class="a_modal"></a>
+
+   <div class="modal_dialog">
+        <div class="modal_header">
+            <a href="#" class="btn_close" aria-hidden="true">x</a>
+            <p>Добавить вопрос</p>
+        </div>
+        <div class="modal_body">
+            <form action="/question_add/" method="post">
+                
+                <label for="question_text">Текст вопроса</label>
+                <input type="text" id="question_text" name="question_text" required>
+
+                <label>Ответы (выберите правильный)</label>
+                <div class="modal_box">
+                    <label>
+                        <input type="text" name="answer1" placeholder="Ответ 1" required>
+                        <input type="radio" name="correct_answer" value="1" required> Правильный
+                    </label><br>
+
+                    <label>
+                        <input type="text" name="answer2" placeholder="Ответ 2" required>
+                        <input type="radio" name="correct_answer" value="2" required> Правильный
+                    </label><br>
+
+                    <label>
+                        <input type="text" name="answer3" placeholder="Ответ 3" required>
+                        <input type="radio" name="correct_answer" value="3" required> Правильный
+                    </label><br>
+
+                    <label>
+                        <input type="text" name="answer4" placeholder="Ответ 4" required>
+                        <input type="radio" name="correct_answer" value="4" required> Правильный
+                    </label>
+                </div>
+
+                <input type="submit" value="Создать">
+            </form>
+        </div>
+   </div>
+</div>
