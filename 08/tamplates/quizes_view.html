@@ -11,7 +11,7 @@
             <div class="quiz-col">№</div>
             <div class="quiz-col">Название</div>
             <div class="quiz-col">Сколько вопросов</div>
-            <!-- <div class="quiz-col">Редактирование</div> -->
+            
         </div>
         {% for q in quizes %}
         <a href="#">
@@ -19,10 +19,6 @@
                 <div class="quiz-col">{{loop.index+1}}</div>
                 <div class="quiz-col">{{q.name}}</div>
                 <div class="quiz-col">{{ q.question|length }}</div>
-                <!-- <div class="quiz-col">
-                    <a href="{{url_for('quiz_edit', quiz_id=q.id)}}">Редактировать</a>
-                    <a href="{{url_for('quiz_delit', quiz_id=q.id)}}">Удалить</a>
-                </div> -->
             </div>
         </a>
         {% endfor %}

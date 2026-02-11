@@ -139,14 +139,6 @@ def quiz_add():
     
     return redirect(url_for('view_quiz_edit'))
 
-# app.route('/quiz_edit/<int:quiz_id>/', methods = ['GET', 'POST'])
-# def quiz_edit(quiz_id):
-#     quiz = db.session.get(Quiz, quiz_id)
-#     if request.method == 'POST':
-#         quiz.name = request.form['quiz_name']
-#         db.session.commit()
-#         return redirect(url_for('view_quiz_edit'))
-#     return render_template('quiz_edit.html', quiz = quiz)
 
 @app.route('/question_add/', methods = ['POST'])
 def question_add():
