@@ -185,4 +185,4 @@ def question_add():
 def page_404(error):
     return render_template('404.html')
 
-app.run(debug=True)
+# app.run(debug=True)
