@@ -1,3 +1,11 @@
+<script>
+    window.addEventListener('hashchange', () => {
+        if (window.location.hash === '#modal_one'){
+            setTimeout(() => document.querySelector('#user_name').focus(), 500);
+        }
+    });
+</script>
+
 
 <div class="modal" id="modal1" aria-hidden="true">
    <a href="" class="a_modal"></a>
@@ -37,10 +45,3 @@
     
 </div>
 
-<script>
-    window.addEventListener('hashchange', () => {
-        if (window.location.hash === '#modal_one'){
-            setTimeout(() => document.querySelector('#user_name').focus(), 500);
-        }
-    });
-</script>
