@@ -19,7 +19,8 @@ class Student(models.Model):
                             # unique_for_date
                             )
     
-    surname = models.CharField(max_length=30, verbose_name='Фамилия')
+    surname = models.CharField(max_length=30, 
+                               verbose_name='Фамилия')
     
     age = models.SmallIntegerField(null=True, 
                                    blank=True, 
@@ -33,7 +34,8 @@ class Student(models.Model):
                         verbose_name="Пол"
     )
     
-    active = models.BooleanField(verbose_name='Активный', null=True, blank=True)
+    active = models.BooleanField(verbose_name='Активный', 
+                                 null=True, blank=True)
     
     course = models.ManyToManyField(
                 to='Course', 
@@ -59,14 +61,14 @@ class Student(models.Model):
 
 
 class Course(models.Model):
-    langs = [
-        ('py','Python'),
-        ('js','JavaScript'),
-        ('c','C++'),
-        ('an','Android'),
+    academic_sub = [
+        ('физ','Физика'),
+        ('инф','Информатика'),
+        ('хим','Химия'),
+        ('мат','Математика'),
     ]
     
-    name = models.CharField(choices=langs, max_length=20, verbose_name="Курс")
+    name = models.CharField(choices=academic_sub, max_length=20, verbose_name="Курс")
     course_num = models.SmallIntegerField(
                     default=1, 
                     verbose_name="Номер курса", 
@@ -125,8 +127,20 @@ class Grade(models.Model):
         verbose_name_plural = "Оценки"
 
 class Profile(models.Model):
-    student = models.OneToOneField(Student, on_delete=models.CASCADE, related_name='profile')
-    phone = models.CharField(max_length=20, blank=True)
+    student = models.OneToOneField(Student, 
+                                   on_delete=models.CASCADE, 
+                                   related_name='profile',
+                                   verbose_name='Профиль')
+    
+    
+    phone = models.CharField(max_length=20, 
+                             blank=True,
+                             verbose_name='Номер телефона')
+    
 
     def __str__(self):
         return f'Профиль {self.student}'
+    
+    class Meta:
+        verbose_name = "Профиль"
+        verbose_name_plural = "Профили"

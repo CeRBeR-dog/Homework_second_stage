@@ -16,6 +16,7 @@
     {% endif %}
 
     <h2>Курсы</h2>
+    {% if student.course.all %}
     <ul>
     {% for course in student.course.all %}
         <li>
@@ -25,11 +26,20 @@
         </li>
     {% endfor %}
     </ul>
+    {% else %}
+        <p>Студент пока не записан на курсы</p>
+    {% endif %}
 
-    <h2>Оценки</h2>
+    
+{% endblock %}
+
+{% block content2 %}
+
+<h2>Оценки</h2>
     <ul>
     {% for grade in student.grades.all %}
         <li>{{ grade.course.get_name_display }}: {{ grade.grade }} ({{ grade.date }})</li>
     {% endfor %}
     </ul>
+
 {% endblock %}

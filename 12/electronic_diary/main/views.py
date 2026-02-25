@@ -16,13 +16,15 @@ def student_detail(request, student_id):
     student = get_object_or_404(Student, id = student_id)
     return render(request, 'main/student_detail.html', {'student': student})
 
-def courses(requset):
+def courses(request):
     course = Course.objects.all()
-    return render(requset, 'main/courses.html', {'course': course})
+    return render(request, 'main/courses.html',
+                   {'courses': course},
+                )
 
 def course_detail(request, course_id):
     course = get_object_or_404(Course, id = course_id)
-    return render(request, 'main/course_detail.html', {'courses': course})
+    return render(request, 'main/course_detail.html', {'course': course})
 
 def grades_journal(request):
     students = Student.objects.prefetch_related('grades')

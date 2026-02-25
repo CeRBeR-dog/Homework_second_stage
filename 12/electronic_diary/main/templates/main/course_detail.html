@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ course.get_name_display }} - {{ course.course_num }}{% endblock %}
+
+{% block content1_head %}
+    <h1>{{ course.get_name_display }} - {{ course.course_num }}</h1>
+{% endblock %}
+
+{% block content1 %}
+
+<p><strong>Начало курса:</strong> {{ course.start_date }}</p>
+<p><strong>Окончание курса:</strong> {{ course.end_date }}</p>
+<p><strong>Описание:</strong> {{ course.description|default:"Нет описания" }}</p>
+
+<h2>Студенты на курсе</h2>
+{% if course.students.all %}
+<ul>
+    {% for student in course.students.all %}
+        <li>
+            <a href="{% url 'student_detail' student.id %}">
+                {{ student.surname }} {{ student.name }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>На этом курсе ещё нет студентов.</p>
+{% endif %}
+
+{% endblock %}
+
+{% block content2 %}
+
+<h2>Журнал оценок по курсу</h2>
+{% if course.grade_set.all %}
+<ul>
+    {% for grade in course.grade_set.all %}
+        <li>
+            <a href="{% url 'student_detail' grade.person.id %}">
+                {{ grade.person.surname }} {{ grade.person.name }}
+            </a>
+            : {{ grade.grade }} ({{ grade.date }})
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Оценок пока нет.</p>
+{% endif %}
+
+{% endblock %}
