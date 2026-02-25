@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ student.surname }} {{ student.name }}{% endblock %}
+
+{% block content1_head %}
+    <h1>{{ student.surname }} {{ student.name }}</h1>
+{% endblock %}
+
+{% block content1 %}
+    <p>Пол: {{ student.get_sex_display }}</p>
+    <p>Возраст: {{ student.age }}</p>
+    <p>Активный: {{ student.active }}</p>
+
+    {% if student.profile %}
+        <p>Телефон: {{ student.profile.phone }}</p>
+    {% endif %}
+
+    <h2>Курсы</h2>
+    <ul>
+    {% for course in student.course.all %}
+        <li>
+            <a href="{% url 'course_detail' course.id %}">
+                {{ course.get_name_display }} - {{ course.course_num }}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+
+    <h2>Оценки</h2>
+    <ul>
+    {% for grade in student.grades.all %}
+        <li>{{ grade.course.get_name_display }}: {{ grade.grade }} ({{ grade.date }})</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

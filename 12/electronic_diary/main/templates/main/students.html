@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %} Студенты {% endblock %}
+
+{% block content1_head %}
+    <h1>Студенты</h1>
+{% endblock %}
+
+{% block content1 %}
+    <ul>    
+    {% for s in students %}
+        <li>
+        <a href="{% url 'student_detail' s.id}"> {{s.surname}} {{s.name}}</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

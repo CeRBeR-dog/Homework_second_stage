@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Курсы{% endblock %}
+
+{% block content1_head %}
+    <h1>Курсы</h1>
+{% endblock %}
+
+{% block content1 %}
+    <ul>
+    {% for course in courses %}
+        <li>
+            <a href="{% url 'course_detail' course.id %}">
+                {{ course.get_name_display }} - {{ course.course_num }}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

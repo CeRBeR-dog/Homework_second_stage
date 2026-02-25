@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Журнал оценок{% endblock %}
+
+{% block content1_head %}
+    <h1>Журнал оценок</h1>
+{% endblock %}
+
+{% block content1 %}
+    <table border="1">
+        <tr>
+            <th>Студент</th>
+            <th>Оценки</th>
+        </tr>
+        {% for student in students %}
+        <tr>
+            <td><a href="{% url 'student_detail' student.id %}">{{ student.surname }} {{ student.name }}</a></td>
+            <td>
+                {% for grade in student.grades.all %}
+                    {{ grade.course.get_name_display }}: {{ grade.grade }} ({{ grade.date }})<br>
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
