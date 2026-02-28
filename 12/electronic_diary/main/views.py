@@ -45,12 +45,13 @@ def course_journal(request, course_id):
     students = course.students.all()
     grades = Grade.objects.filter(course=course).select_related('person')
 
-    dates = sorted(set(grade.date for grade in grades))
+    dates = sorted(set(grade.date for grade in grades if grade.date))
 
     journal = defaultdict(dict)
 
     for grade in grades:
-        journal[grade.person.id][grade.date] = grade.grade
+        if grade.date:
+            journal[grade.person.id][grade.date] = grade.grade
 
     context = {
         'course': course,

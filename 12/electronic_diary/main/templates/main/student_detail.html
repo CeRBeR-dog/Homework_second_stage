@@ -35,11 +35,26 @@
 
 {% block content2 %}
 
-<h2>Оценки</h2>
-    <ul>
+<table border="1" cellpadding="8">
+
+    <thead><h2>Оценки</h2></thead>
+
+    <tbody>
+
     {% for grade in student.grades.all %}
-        <li>{{ grade.course.get_name_display }}: {{ grade.grade }} ({{ grade.date }})</li>
+
+        <tr>
+            <td>
+            {{ grade.course.get_name_display }}
+            </td>
+            <td>
+            {{ grade.grade }} ({{ grade.date }})
+            </td>
+        </tr>
     {% endfor %}
-    </ul>
+       
+    </tbody>
+
+</table>
 
 {% endblock %}

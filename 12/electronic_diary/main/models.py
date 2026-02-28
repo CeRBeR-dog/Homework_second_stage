@@ -67,18 +67,38 @@ class Course(models.Model):
         ('хим','Химия'),
         ('мат','Математика'),
     ]
+
+    week_days = [
+        ('mon', 'Понедельник'),
+        ('tue', 'Вторник'),
+        ('wed', 'Среда'),
+        ('thu', 'Четверг'),
+        ('fri', 'Пятница'),
+        ('sat', 'Суббота'),
+    ]
     
-    name = models.CharField(choices=academic_sub, max_length=20, verbose_name="Курс")
+    name = models.CharField(choices=academic_sub, 
+                            max_length=20, 
+                            verbose_name="Курс")
+
     course_num = models.SmallIntegerField(
                     default=1, 
                     verbose_name="Номер курса", 
-                    validators=[MinValueValidator(1), MaxValueValidator(100)]) 
+                    validators=[MinValueValidator(1), MaxValueValidator(100)])
+     
     start_date = models.DateField(verbose_name = 'Начало курса', null=True)
+
     end_date = models.DateField(verbose_name = 'Окончание курса', null=True)
+
+    days_of_week = models.JSONField(default=list,
+                                    blank=True,
+                                    verbose_name="Дни недели")
+
     description = models.TextField(blank=True, verbose_name="Описание")
     
     def __str__(self):
-        return f"{self.get_name_display()} - {self.course_num}"
+        days = ', '.join([dict(self.week_days).get(d, d) for d in self.days_of_week])
+        return f"{self.get_name_display()} - {self.course_num} ({days})"
 
     class Meta:
         unique_together = [['name', 'course_num']]
@@ -101,6 +121,11 @@ class Grade(models.Model):
         verbose_name = 'Оценка'
     )
     
+    homework = models.TextField(
+        blank = True,
+        verbose_name='Домашнее задание'
+    )
+
     course = models.ForeignKey(
             Course, 
             null=True,

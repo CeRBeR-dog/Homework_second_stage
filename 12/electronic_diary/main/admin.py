@@ -1,10 +1,10 @@
 from django.contrib import admin
-
+from django import forms
 from .models import *
 
 # admin.site.register(Student) 
 
-admin.site.register(Course)
+# admin.site.register(Course)
 admin.site.register(Grade)
 
 @admin.register(Student)
@@ -28,6 +28,21 @@ class StudentAdmin(admin.ModelAdmin):
         return f"{obj.surname} {obj.name[0]}."
     
     short_name.short_description = "Короткое имя"
+
+class CourseAdminForm(forms.ModelForm):
+    days_of_week = forms.MultipleChoiceField(
+        choices=Course.week_days,
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+
+    class Meta:
+        model = Course
+        fields = '__all__'
+
+@admin.register(Course)
+class CourseAdmin(admin.ModelAdmin):
+    form = CourseAdminForm
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
