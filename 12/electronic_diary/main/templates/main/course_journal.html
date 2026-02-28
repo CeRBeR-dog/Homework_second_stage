@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load journal_tags %}
+
+{% block title %}Журнал{% endblock %}
+
+{% block content1_head %}
+<h1>Журнал курса {{ course.get_name_display }} - {{ course.course_num }}</h1>
+{% endblock %}
+
+{% block content1 %}
+
+<table border="1" cellpadding="8">
+    <thead>
+        <tr>
+            <th>Студент</th>
+            {% for date in dates %}
+                <th>{{ date }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for student in students %}
+        <tr>
+            <td>
+                <a href="{% url 'student_detail' student.id %}">
+                    {{ student.surname }} {{ student.name }}
+                </a>
+            </td>
+
+            {% for date in dates %}
+            <td>
+                {% with student_grades=journal|get_item:student.id %}
+                    {% if student_grades %}
+                        {% with grade=student_grades|get_item:date %}
+                            {{ grade|default:"" }}
+                        {% endwith %}
+                    {% endif %}
+                {% endwith %}
+            </td>
+            {% endfor %}
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

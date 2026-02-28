@@ -19,7 +19,10 @@
 {% endblock %}
 
 {% block add_inf %}
-    <h3>Здесь в будущем будет список журналов</h3>
-    <a href="{% url 'grades_journal'%}">Журнал</a>
+    {% for course in courses %}
+        <li>
+            <a href="{% url 'course_journal' course.id %}">Журнал курса "{{ course.get_name_display }} - {{ course.course_num }}</a>
+        </li>
+    {% endfor %}
 
 {% endblock %}
