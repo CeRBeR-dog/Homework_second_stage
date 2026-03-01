@@ -9,12 +9,13 @@
 
 {% block content1 %}
 
-<table border="1" cellpadding="8">
+<div class="container_tab">
+<table class="journal-table grades-table">
     <thead>
         <tr>
             <th>Студент</th>
             {% for date in dates %}
-                <th>{{ date }}</th>
+                <th>{{ date|date:"d.m.Y" }}</th>
             {% endfor %}
         </tr>
     </thead>
@@ -44,5 +45,41 @@
         {% endfor %}
     </tbody>
 </table>
+</div>
 
+{% endblock %}
+
+{% block content2_head %}
+    <h2>Домашнее задание для курса {{ course.get_name_display }} - {{ course.course_num }}</h2>               
+{% endblock %}
+            
+        
+{% block content2 %}
+
+<div class="container_tab">
+<table class="journal-table homework-table">
+    <thead>
+        <tr>
+            {% for date in dates %}
+                <th>{{ date|date:"d.m.Y" }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {% for date in dates %}
+                <td>
+                    {% with homework=homework_by_date|get_item:date %}
+                        {% if homework %}
+                            {{ homework|truncatechars:50 }}
+                        {% else %}
+                            —
+                        {% endif %}
+                    {% endwith %}
+                </td>
+            {% endfor %}
+        </tr>
+    </tbody>
+</table>
+</div>            
 {% endblock %}

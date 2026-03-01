@@ -33,7 +33,9 @@ class CourseAdminForm(forms.ModelForm):
     days_of_week = forms.MultipleChoiceField(
         choices=Course.week_days,
         widget=forms.CheckboxSelectMultiple,
+        label='Дни занятий',
         required=False
+        
     )
 
     class Meta:

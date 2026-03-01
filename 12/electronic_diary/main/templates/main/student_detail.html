@@ -34,27 +34,27 @@
 {% endblock %}
 
 {% block content2 %}
-
-<table border="1" cellpadding="8">
-
-    <thead><h2>Оценки</h2></thead>
-
-    <tbody>
-
-    {% for grade in student.grades.all %}
-
-        <tr>
-            <td>
-            {{ grade.course.get_name_display }}
-            </td>
-            <td>
-            {{ grade.grade }} ({{ grade.date }})
-            </td>
-        </tr>
-    {% endfor %}
-       
-    </tbody>
-
-</table>
-
+    <h2>Оценки</h2>
+    <div class="container_tab">
+        <table class="journal-table">
+            <thead>
+                <tr>
+                    <th>Курс</th>
+                    <th>Оценка (дата)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for grade in student.grades.all %}
+                <tr>
+                    <td>{{ grade.course.get_name_display }}</td>
+                    <td>{{ grade.grade }} ({{ grade.date|date:"d.m.Y" }})</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="2">Нет оценок</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
