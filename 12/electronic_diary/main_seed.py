@@ -64,7 +64,7 @@ def main():
     grades = []
     for st in students:
         st_courses = list(st.course.all())
-        for _ in range(10):  # по 10 оценок на студента
+        for _ in range(20):  # по n оценок на студента
             course = random.choice(st_courses)
             grade_val = random.randint(0, 10)  # оценка от 0 до 10
             date = fake.date_between(start_date='-90d', end_date='today')
