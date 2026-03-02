@@ -7,22 +7,31 @@
 {% endblock %}
 
 {% block content1 %}
-    <ul>
+    <div class="container_tab">
+    <table class="journal-table grades-table">
     {% for course in courses %}
-        <li>
+        <tr>
+            <td>
             <a href="{% url 'course_detail' course.id %}">
                 {{ course.get_name_display }} - {{ course.course_num }}
             </a>
-        </li>
+            </td>
+        </tr>
     {% endfor %}
-    </ul>
+    </table>
+    </div>
 {% endblock %}
 
 {% block add_inf %}
+    <div class="container_tab">
+    <table class="journal-table grades-table">
     {% for course in courses %}
-        <li>
+        <tr>
+            <td>
             <a href="{% url 'course_journal' course.id %}">Журнал курса "{{ course.get_name_display }} - {{ course.course_num }}</a>
-        </li>
+            </td>
+        </tr>
     {% endfor %}
-
+    </table>
+    </div>
 {% endblock %}

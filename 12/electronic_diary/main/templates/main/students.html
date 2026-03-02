@@ -7,11 +7,17 @@
 {% endblock %}
 
 {% block content1 %}
-    <ul>    
+<div class="container_tab">
+<table class="journal-table grades-table">
+    
     {% for s in students %}
-        <li>
+    <tr>
+        <td>
         <a href="{% url 'student_detail' s.id %}"> {{s.surname}} {{s.name}}</a>
-        </li>
+        </td>
+    </tr>
     {% endfor %}
-    </ul>
+    
+</table>
+</div>
 {% endblock %}

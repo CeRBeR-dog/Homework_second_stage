@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -152,10 +153,10 @@ class Grade(models.Model):
         verbose_name_plural = "Оценки"
 
 class Profile(models.Model):
-    student = models.OneToOneField(Student, 
-                                   on_delete=models.CASCADE, 
-                                   related_name='profile',
-                                   verbose_name='Профиль')
+    user = models.OneToOneField(User, 
+                                on_delete=models.CASCADE, 
+                                related_name='profile',
+                                verbose_name='Профиль')
     
     
     phone = models.CharField(max_length=20, 
@@ -164,7 +165,7 @@ class Profile(models.Model):
     
 
     def __str__(self):
-        return f'Профиль {self.student}'
+        return f'Профиль {self.user.username}'
     
     class Meta:
         verbose_name = "Профиль"

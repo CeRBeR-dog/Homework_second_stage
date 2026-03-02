@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content1_head %}
-    <h1>Приветсвуем на электронном журнале</h1>
+    {% if user.is_authenticated %}
+        <h1>Приветсвуем, {{ user.first_name|default:user.username }} {{ user.last_name }}</h1>
+    {% else %}
+        <h1>Пожалуйста войдите или зарегистрируйтесь</h1>
+    {% endif %}
+
 {% endblock %}
 
 {% block content2 %}

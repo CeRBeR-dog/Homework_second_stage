@@ -15,5 +15,7 @@ urlpatterns = [
     
     path('grades/', views.grades_journal, name='grades_journal'),  
     
-    
+    path('register/', views.RegisterUser.as_view(), name='register'),
+    path('login/', views.LoginUser.as_view(), name='login'),
+    path('logout/', views.LogoutUser.as_view(), name='logout')
 ]

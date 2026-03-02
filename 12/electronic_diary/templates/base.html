@@ -15,10 +15,23 @@
         <nav>
             <ul class="main-menu">
                 {% block main_menu %}
-                <li><a href="{% url 'index' %}">Главная</a></li>
-                <li><a href="{% url 'courses' %}">Курсы</a></li>
-                <li><a href="{% url 'students' %}">Студенты</a></li>
-                <li><a href="/admin/">Админка</a></li>
+                    <li><a href="{% url 'index' %}">Главная</a></li>
+                    <li><a href="{% url 'courses' %}">Курсы</a></li>
+                    <li><a href="{% url 'students' %}">Студенты</a></li>
+                    {% if user.is_authenticated %}
+                        {% if user.is_staff %}
+                            <li><a href="/admin/">Админка</a></li>
+                        {% endif %}
+                        <li>
+                            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="logout-button">Выход ({{ user.username }})</button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">Вход</a></li>
+                        <li><a href="{% url 'register' %}">Регистрация</a></li>
+                    {% endif %}
                 {% endblock %}
             </ul>
         </nav> 

@@ -48,4 +48,4 @@ class CourseAdmin(admin.ModelAdmin):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('student', 'phone')
+    list_display = ('user', 'phone')
