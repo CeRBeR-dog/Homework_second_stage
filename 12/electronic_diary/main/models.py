@@ -1,6 +1,8 @@
 from django.db import models
+from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 # Create your models here.
 
@@ -45,9 +47,18 @@ class Student(models.Model):
     
                 # course.student_set()
     
-    # фото
+    photo = models.ImageField(upload_to='student_photo/',
+                              blank=True,
+                              null= True,
+                              verbose_name='Фото')
     # курсы - связь
     
+    @property
+    def get_photo_url(self):
+        if self.photo and self.photo.storage.exists(self.photo.name):
+            return self.photo.url
+        return staticfiles_storage.url('images/no_photo.png')
+
     def __str__(self):
         return f"{self.surname} {self.name}"
     

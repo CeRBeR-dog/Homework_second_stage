@@ -7,29 +7,55 @@
 {% endblock %}
 
 {% block content1 %}
-    <p>Пол: {{ student.get_sex_display }}</p>
-    <p>Возраст: {{ student.age }}</p>
-    <p>Активный: {{ student.active }}</p>
+    
+    {% load static %}
+    <div class="student-photo">
+        <img src="{{ student.get_photo_url }}" alt="Фото {{ student.name }}" width="200">
+    </div>
+   
 
-    {% if student.profile %}
-        <p>Телефон: {{ student.profile.phone }}</p>
-    {% endif %}
+    <table class="student-info-table">
+        <tr>
+            <th>Пол:</th>
+            <td>{{ student.get_sex_display }}</td>
+        </tr>
+        <tr>
+            <th>Возраст:</th>
+            <td>{{ student.age }}</td>
+        </tr>
+        <tr>
+            <th>Активный:</th>
+            <td>{% if student.active %}Да{% else %}Нет{% endif %}</td>
+        </tr>
+        {% if student.profile %}
+        <tr>
+            <th>Телефон:</th>
+            <td>{{ student.profile.phone }}</td>
+        </tr>
+        {% endif %}
+    </table>
 
     <h2>Курсы</h2>
     {% if student.course.all %}
-    <ul>
-    {% for course in student.course.all %}
-        <li>
-            <a href="{% url 'course_detail' course.id %}">
-                {{ course.get_name_display }} - {{ course.course_num }}
-            </a>
-        </li>
-    {% endfor %}
-    </ul>
+        <table class="journal-table">
+            <thead>
+                <tr>
+                    <th>Курс</th>
+                    <th>Номер курса</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for course in student.course.all %}
+                <tr>
+                    <td><a href="{% url 'course_detail' course.id %}">{{ course.get_name_display }}</a></td>
+                    <td>{{ course.course_num }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     {% else %}
         <p>Студент пока не записан на курсы</p>
     {% endif %}
-
     
 {% endblock %}
 

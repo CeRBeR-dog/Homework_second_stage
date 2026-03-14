@@ -58,6 +58,7 @@ class StudentAddForm(forms.ModelForm):
         age = self.cleaned_data.get('age')
         if age and (age < 18 or age > 99):
             raise ValidationError('Возраст должен быть от 18 до 99')
+        return age
          
         
     # def save(self, commit: bool = ...) -> Any:        

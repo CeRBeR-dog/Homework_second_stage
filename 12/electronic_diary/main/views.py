@@ -34,6 +34,18 @@ def student_detail(request, student_id):
                   {'student': student}
                   )
 
+def student_add(request):
+    if request.method == 'POST':
+        form = StudentAddForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('students')
+    
+    else:
+        form = StudentAddForm()
+    return render(request, 'main/student_form.html',
+                  {'form': form})
+
 @login_required(login_url='/login/')
 def courses(request):
     course = Course.objects.all()
