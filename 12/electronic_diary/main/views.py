@@ -3,6 +3,7 @@ from django.db import connection
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.db.models import Q
 from django.urls import reverse_lazy, reverse
+from django.core.paginator import Paginator
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -24,8 +25,14 @@ def index(request):
 @login_required(login_url='/login/')
 def students(request):
     students = Student.objects.all()
+    paginator_student = Paginator(students, 15)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator_student.get_page(page_number)
+
     return render(request, 'main/students.html', 
-                    context={'students':students})
+                    context={'students': students,
+                             'page_obj': page_obj})
 
 
 def student_detail(request, student_id):
