@@ -37,8 +37,22 @@ def students(request):
 
 def student_detail(request, student_id):
     student = get_object_or_404(Student, id = student_id)
+    grades_list = Grade.objects.filter(person = student)
+    paginator_grades = Paginator(grades_list, 5)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator_grades.get_page(page_number)
+
+    custom_page_range = page_obj.paginator.get_elided_page_range(
+        page_obj.number,
+        on_each_side = 1,
+        on_ends = 1
+    )
+
     return render(request, 'main/student_detail.html', 
-                  {'student': student}
+                  context= {'student': student,
+                            'page_obj': page_obj,
+                            'custom_page_range': custom_page_range}
                   )
 
 def student_add(request):
@@ -56,8 +70,14 @@ def student_add(request):
 @login_required(login_url='/login/')
 def courses(request):
     course = Course.objects.all()
+    paginator_course = Paginator(course, 5)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator_course.get_page(page_number)
+
     return render(request, 'main/courses.html',
-                   {'courses': course},
+                  context = {'courses': course,
+                             'page_obj': page_obj},
                 )
 
 

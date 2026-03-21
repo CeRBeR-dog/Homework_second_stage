@@ -70,7 +70,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for grade in student.grades.all %}
+                {% for grade in page_obj %}
                 <tr>
                     <td>{{ grade.course.get_name_display }}</td>
                     <td>{{ grade.grade }} ({{ grade.date|date:"d.m.Y" }})</td>
@@ -82,5 +82,34 @@
                 {% endfor %}
             </tbody>
         </table>
+        <table>
+        <tr>
+            <td>
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">« Назад</a>
+            {% endif %}
+            </td>
+
+            <td style="position: sticky; left: calc(33.3% - 50px);">
+            <span class="current">
+                {% for num in custom_page_range %}
+                {% if num == page_obj.paginator.ELLIPSIS %}
+                    <span class="ellipsis">{{ num }}</span>
+                {% elif num == page_obj.number %}
+                    <span class="current-page"><strong>{{ num }}</strong></span>
+                {% else %}
+                    <a href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+                {% endfor %}
+            </span>
+            </td>
+
+            <td>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Вперед »</a>
+            {% endif %}
+            </td>
+        </tr>
+        </table>        
     </div>
 {% endblock %}

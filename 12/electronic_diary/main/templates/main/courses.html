@@ -9,7 +9,7 @@
 {% block content1 %}
     <div class="container_tab">
     <table class="journal-table grades-table">
-    {% for course in courses %}
+    {% for course in page_obj %}
         <tr>
             <td>
             <a href="{% url 'course_detail' course.id %}">
@@ -22,16 +22,79 @@
     </div>
 {% endblock %}
 
+{% block content2 %}
+<table>
+    <tr>
+        <td>
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }} ">Назад</a>
+        {% endif %}
+        </td>
+
+        <td style="position: sticky; left: calc(33.3% - 50px);">
+        <span class="current">
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <strong>{{ num }}</strong> {% else %}
+                    <a href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+        </span>
+        </td>
+
+        <td>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">вперед</a>
+        {% endif %}
+        </td>
+    </tr>
+</table>            
+{% endblock %}
+
 {% block add_inf %}
     <div class="container_tab">
     <table class="journal-table grades-table">
-    {% for course in courses %}
-        <tr>
-            <td>
-            <a href="{% url 'course_journal' course.id %}">Журнал курса "{{ course.get_name_display }} - {{ course.course_num }}</a>
-            </td>
-        </tr>
-    {% endfor %}
+        <thead>
+            <tr><h2>Журналы</h2></tr>
+        </thead>
+        <tbody>        
+            {% for course in page_obj %}
+                <tr>
+                    <td>
+                    <a href="{% url 'course_journal' course.id %}">Журнал курса "{{ course.get_name_display }} - {{ course.course_num }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
     </div>
+{% endblock %}
+
+{% block paginator %}
+<table>
+    <tr>
+        <td>
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }} ">Назад</a>
+        {% endif %}
+        </td>
+
+        <td style="position: sticky; left: calc(33.3% - 50px);">
+        <span class="current">
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <strong>{{ num }}</strong> {% else %}
+                    <a href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+        </span>
+        </td>
+
+        <td>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">вперед</a>
+        {% endif %}
+        </td>
+    </tr>
+</table>    
 {% endblock %}
