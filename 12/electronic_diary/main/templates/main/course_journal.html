@@ -30,14 +30,32 @@
             </td>
 
             {% for date in dates %}
-            <td>
+            <td data-student="{{ student.id }}"
+                data-date="{{ date|date:'Y-m-d' }}"
+                data-name="{{ student.surname }} {{ student.name }}"
+                onclick="openGradeModal(this)"
+                style="cursor: pointer;">
+
                 {% with student_grades=journal|get_item:student.id %}
                     {% if student_grades %}
-                        {% with grade=student_grades|get_item:date %}
-                            {{ grade|default:"" }}
+                        {# Достаем саму оценку (число) по дате #}
+                        {% with grade_val=student_grades|get_item:date %}
+                            
+                            {# ВАЖНО: проверяем именно на None, чтобы 0 не воспринимался как пустота #}
+                            {% if grade_val is not None %} 
+                                
+                                {% if grade_val == 0 %}
+                                    <span style="color: #d32f2f; font-weight: bold;">н</span>
+                                {% else %}
+                                    {{ grade_val }}
+                                {% endif %}
+                                
+                            {% endif %}
+                            
                         {% endwith %}
                     {% endif %}
                 {% endwith %}
+           
             </td>
             {% endfor %}
 
@@ -82,4 +100,69 @@
     </tbody>
 </table>
 </div>            
+
+
+
+<div id="gradeModal" class="modal">
+    <div class="modal-content">
+        <h3>Выставить оценку</h3>
+        <p id="modalInfo"></p> 
+        <div class="grade-grid">
+            <button class="btn-grade" onclick="submitGrade(1)">1</button>
+            <button class="btn-grade" onclick="submitGrade(2)">2</button>
+            <button class="btn-grade" onclick="submitGrade(3)">3</button>
+            <button class="btn-grade" onclick="submitGrade(4)">4</button>
+            <button class="btn-grade" onclick="submitGrade(5)">5</button>
+            <button class="btn-grade" onclick="submitGrade(6)">6</button>
+            <button class="btn-grade" onclick="submitGrade(7)">7</button>
+            <button class="btn-grade" onclick="submitGrade(8)">8</button>
+            <button class="btn-grade" onclick="submitGrade(9)">9</button>
+            <button class="btn-grade" onclick="submitGrade(10)">10</button>
+        </div>
+        
+        <div class="modal-footer">
+            <button type="button" class="btn-absent" onclick="submitGrade('н')">Н</button>
+            <button type="button" class="btn-delete" onclick="submitGrade('delete')">Очистить</button>
+            <button type="button" class="btn-close" onclick="closeModal()">Отмена</button>
+        </div>
+    </div>
+</div>
+
+<form id="hiddenGradeForm" method="POST" action="{% url 'update_grade' %}" style="display:none;">
+    {% csrf_token %}
+    <input type="hidden" name="student_id" id="form_student_id">
+    <input type="hidden" name="course_id" value="{{ course.id }}">
+    <input type="hidden" name="date" id="form_date">
+    <input type="hidden" name="grade_value" id="form_grade_value">
+</form>
+
+<script>
+    function openGradeModal(cell) {
+        const sId = cell.getAttribute('data-student');
+        const sName = cell.getAttribute('data-name');
+        const sDate = cell.getAttribute('data-date');
+
+        document.getElementById('form_student_id').value = sId;
+        document.getElementById('form_date').value = sDate;
+        document.getElementById('modalInfo').innerHTML = `<b>${sName}</b><br>${sDate}`;
+        document.getElementById('gradeModal').style.display = 'flex';
+    }
+
+    function submitGrade(val) {
+        document.getElementById('form_grade_value').value = val;
+        document.getElementById('hiddenGradeForm').submit();
+    }
+
+    function closeModal() {
+        document.getElementById('gradeModal').style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('gradeModal');
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+</script>
+
 {% endblock %}

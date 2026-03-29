@@ -4,6 +4,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.db.models import Q
 from django.urls import reverse_lazy, reverse
 from django.core.paginator import Paginator
+from django.http import HttpResponseRedirect
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -152,6 +153,36 @@ def course_journal(request, course_id):
     }
 
     return render(request, 'main/course_journal.html', context)
+
+
+def update_grade(request):
+    if request.method == 'POST':
+        student_id = request.POST.get('student_id')
+        course_id = request.POST.get('course_id')
+        date_str = request.POST.get('date')
+        gradue_value = request.POST.get('grade_value')
+
+        if not all([student_id, course_id, date_str, gradue_value]):
+            return redirect(request.META.get('HTTP_REFERER', 'journal'))
+        
+        if gradue_value == 'delete':
+            Grade.objects.filter(
+                person_id = student_id, 
+                course_id = course_id, 
+                date = date_str
+            ).delete()
+            
+        else:
+            val = 0 if gradue_value == 'н' else int(gradue_value)
+
+            Grade.objects.update_or_create(
+                person_id = student_id,
+                course_id = course_id,
+                date = date_str,
+                defaults={'grade': val}
+            )  
+        
+        return redirect(request.META.get('HTTP_REFERER', 'journal'))
 
 
 class RegisterUser(CreateView):

@@ -13,7 +13,8 @@ urlpatterns = [
     path('courses/<int:course_id>/', views.course_detail, name='course_detail'),
     path('courses/<int:course_id>/journal/', views.course_journal, name='course_journal'), 
     
-    path('grades/', views.grades_journal, name='grades_journal'),  
+    path('grades/', views.grades_journal, name='grades_journal'),
+    path('update_grade/', views.update_grade, name='update_grade'),  
     
     path('register/', views.RegisterUser.as_view(), name='register'),
     path('login/', views.LoginUser.as_view(), name='login'),
