@@ -15,8 +15,10 @@ from django.contrib.auth.views import LoginView, LogoutView
 
 from .forms import *
 from .models import Student, Course, Grade, Profile
+from .decorators import teacher_required
 from collections import defaultdict
 from datetime import timedelta
+
 
 # Create your views here.
 
@@ -36,6 +38,7 @@ def students(request):
                              'page_obj': page_obj})
 
 
+@login_required(login_url='/login/')
 def student_detail(request, student_id):
     student = get_object_or_404(Student, id = student_id)
     grades_list = Grade.objects.filter(person = student)
@@ -56,6 +59,9 @@ def student_detail(request, student_id):
                             'custom_page_range': custom_page_range}
                   )
 
+
+@login_required(login_url='/login/')
+@teacher_required
 def student_add(request):
     if request.method == 'POST':
         form = StudentAddForm(request.POST, request.FILES)
@@ -67,6 +73,7 @@ def student_add(request):
         form = StudentAddForm()
     return render(request, 'main/student_form.html',
                   {'form': form})
+
 
 @login_required(login_url='/login/')
 def courses(request):
@@ -82,6 +89,8 @@ def courses(request):
                 )
 
 
+@login_required(login_url='/login/')
+@teacher_required
 def course_detail(request, course_id):
     courses = get_object_or_404(Course, id = course_id)
     return render(request, 
@@ -90,6 +99,8 @@ def course_detail(request, course_id):
                   )
 
 
+@login_required(login_url='/login/')
+@teacher_required
 def grades_journal(request):
     students = Student.objects.prefetch_related('grades')
     return render(request,
@@ -98,6 +109,7 @@ def grades_journal(request):
                     )
 
 
+# вспомогательная функция 
 def get_leeson_dates(course):
     if not course.start_date or not course.end_date:
         return[]
@@ -125,6 +137,8 @@ def get_leeson_dates(course):
     return dates
 
 
+@login_required(login_url='/login/')
+@teacher_required
 def course_journal(request, course_id):
     course = get_object_or_404(Course, id = course_id)
 
@@ -155,7 +169,10 @@ def course_journal(request, course_id):
     return render(request, 'main/course_journal.html', context)
 
 
+@login_required(login_url='/login/')
+@teacher_required
 def update_grade(request):
+    
     if request.method == 'POST':
         student_id = request.POST.get('student_id')
         course_id = request.POST.get('course_id')
