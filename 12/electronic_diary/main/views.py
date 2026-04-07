@@ -92,10 +92,33 @@ def courses(request):
 @login_required(login_url='/login/')
 @teacher_required
 def course_detail(request, course_id):
-    courses = get_object_or_404(Course, id = course_id)
-    return render(request, 
-                  'main/course_detail.html', 
-                  {'course': courses}
+    course = get_object_or_404(Course, id = course_id)
+    # student = get_object_or_404(Student, id = student_id)
+    
+    sort_param = request.GET.get('sort', '-date')
+
+    allowed_sorts = ['grade', '-grade', 'date', '-date', 'person__surname', '-person__surname']
+    if sort_param not in allowed_sorts:
+        sort_param = '-date'
+   
+    grades_list = Grade.objects.filter(
+        course=course).select_related('person').order_by(sort_param)
+    
+    paginator_grades = Paginator(grades_list, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator_grades.get_page(page_number)
+
+    custom_page_range = page_obj.paginator.get_elided_page_range(
+        page_obj.number,
+        on_each_side = 1,
+        on_ends = 1
+    )
+    
+    return render(request, 'main/course_detail.html', 
+                  {'course': course,
+                   'page_obj': page_obj,
+                    'custom_page_range': custom_page_range,
+                    'current_sort': sort_param}
                   )
 
 

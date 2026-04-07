@@ -32,20 +32,63 @@
 
 {% block content2 %}
 
-<h2>Журнал оценок по курсу</h2>
-{% if course.grade_set.all %}
-<ul>
-    {% for grade in course.grade_set.all %}
-        <li>
-            <a href="{% url 'student_detail' grade.person.id %}">
-                {{ grade.person.surname }} {{ grade.person.name }}
-            </a>
-            : {{ grade.grade }} ({{ grade.date }})
-        </li>
+<h2>Журнал оценок</h2>
+
+<table class="journal-table">
+    <thead>
+        <tr>
+            <!-- Новая колонка: Студент -->
+            <th>
+                <a href="?sort={% if current_sort == 'person__surname' %}-person__surname{% else %}person__surname{% endif %}&page={{ page_obj.number }}">
+                    Студент {% if current_sort == 'person__surname' %}▲{% elif current_sort == '-person__surname' %}▼{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?sort={% if current_sort == 'date' %}-date{% else %}date{% endif %}&page={{ page_obj.number }}">
+                    Дата {% if current_sort == 'date' %}▲{% elif current_sort == '-date' %}▼{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?sort={% if current_sort == 'grade' %}-grade{% else %}grade{% endif %}&page={{ page_obj.number }}">
+                    Оценка {% if current_sort == 'grade' %}▲{% elif current_sort == '-grade' %}▼{% endif %}
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for grade in page_obj %}
+        <tr>
+            <!-- Выводим ФИО студента -->
+            <td>{{ grade.person.surname }} {{ grade.person.name }}</td>
+            <td>{{ grade.date|date:"d.m.Y" }}</td>
+            <td><strong>{{ grade.grade }}</strong></td>
+        </tr>
+        {% empty %}
+        <!-- Поменял colspan на 3, так как теперь 3 колонки -->
+        <tr><td colspan="3">Оценок пока нет.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Блок пагинации -->
+<div class="pagination">
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}&sort={{ current_sort }}">Назад</a>
+    {% endif %}
+
+    {% for i in custom_page_range %}
+        {% if i == page_obj.number %}
+            <span class="current">{{ i }}</span>
+        {% elif i == page_obj.paginator.ELLIPSIS %}
+            <span class="ellipsis">{{ i }}</span>
+        {% else %}
+            <a href="?page={{ i }}&sort={{ current_sort }}">{{ i }}</a>
+        {% endif %}
     {% endfor %}
-</ul>
-{% else %}
-<p>Оценок пока нет.</p>
-{% endif %}
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}&sort={{ current_sort }}">Вперед</a>
+    {% endif %}
+</div>
 
 {% endblock %}
