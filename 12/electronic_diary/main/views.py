@@ -27,7 +27,12 @@ def index(request):
 
 @login_required(login_url='/login/')
 def students(request):
-    students = Student.objects.all()
+    search_query = request.GET.get('search', '')
+    sort_param = request.GET.get('sort', 'surname')
+
+    students = Student.objects.filter(
+        Q(surname__icontains=search_query) | Q(name__icontains=search_query)
+    ).order_by(sort_param, 'name')
     paginator_student = Paginator(students, 15)
 
     page_number = request.GET.get('page')

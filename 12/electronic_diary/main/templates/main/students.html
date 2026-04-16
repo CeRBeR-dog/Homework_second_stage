@@ -51,3 +51,23 @@
     </tr>
 </table>            
 {% endblock %}
+
+
+{% block add_inf %}
+
+<div class="search-container">
+    <form method="get" action="" class="search-form">
+        <input type="text" 
+               name="search" 
+               class="search-input" 
+               placeholder="Поиск по фамилии или имени" 
+               value="{{ request.GET.search }}">
+        
+        <button type="submit" class="btn btn-search">Найти 🔍</button>
+        
+        <!-- Используем имя из urls.py для сброса -->
+        <a href="{% url 'students' %}" class="btn btn-reset">Сбросить 🔄</a>
+    </form>
+</div>
+        
+{% endblock %}
