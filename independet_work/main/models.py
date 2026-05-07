@@ -21,6 +21,9 @@ class Category(models.Model):
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
 
+    def __str__(self):
+        return self.name_category
+
 
 class Scent(models.Model):
 
@@ -38,22 +41,22 @@ class Scent(models.Model):
         verbose_name = 'Аромат'
         verbose_name_plural = 'Ароматы'
 
+    def __str__(self):
+        return self.name_scent
 
-# class Productimage(models.Model):
 
-
-
-class Craftitem(models.Model):
+class Product(models.Model):
 
     category = models.ForeignKey(Category,
                                  on_delete=models.CASCADE,
-                                 related_name='name_category',
+                                 related_name='products',
                                  verbose_name='Категория',
                                  )
     
     scent = models.ForeignKey(Scent,
-                              on_delete=models.CASCADE,
-                              related_name='name_scent',
+                              on_delete=models.SET_NULL,
+                              null=True,
+                              related_name='product',
                               verbose_name='Аромат',
                               )
 
@@ -68,11 +71,11 @@ class Craftitem(models.Model):
                             verbose_name='URL',
                             )
     
-    photo = models.ImageField(upload_to='products/%Y/%m/%d/',
-                              blank=True,
-                              null=True,
-                              verbose_name='Фото товара',
-                              )
+    # photo = models.ImageField(upload_to='products/%Y/%m/%d/',
+    #                           blank=True,
+    #                           null=True,
+    #                           verbose_name='Фото товара',
+    #                           )
     
     price = MoneyField(max_digits=10,
                        decimal_places=2,
@@ -94,7 +97,34 @@ class Craftitem(models.Model):
         ordering = ['-id']
 
     def __str__(self):
-        return self.name
+        return self.name_item
+    
+    #заглушка на отсутсвующие фото
+    @property
+    def get_photo_url(self):
+        if self.photo and hasattr(self.photo, 'url'):
+            return self.photo.url
+        return staticfiles_storage.url('images/no_photo.jpg')
+
+
+class Productimage(models.Model):
+
+    product = models.ForeignKey(Product,
+                                on_delete=models.CASCADE,
+                                related_name='product',
+                                verbose_name='Товара',
+                                )
+    
+    image = models.ImageField(upload_to='products/%Y/%m/%d/',
+                              blank=True,
+                              null=True,
+                              verbose_name='Фото товара',
+                              )
+    
+    main_img = models.BooleanField(verbose_name='Главное фото',
+                                   blank=True,
+                                   )
+    
     
 
 class Lead(models.Model):
@@ -105,9 +135,9 @@ class Lead(models.Model):
         ('done','готово')
                ]
         
-    product = models.ForeignKey(Craftitem,
+    product = models.ForeignKey(Product,
                                 on_delete=models.CASCADE,
-                                related_name='name_item',
+                                related_name='leads',
                                 verbose_name='Название товара для заказа',
                                 )
     
@@ -129,13 +159,15 @@ class Lead(models.Model):
                               )
     
     created_at = models.DateTimeField(verbose_name='Дата и время подачи заявки',
+                                      auto_now_add=True,
                                       null=True,
                                       )
+    
+    class Meta:
+        verbose_name = 'Заявка'
+        verbose_name_plural = 'Заявки'
+
+    def __str__(self):
+        return f"Заявка #{self.id} от {self.name_client}"
 
 
-    #заглушка на отсутсвующие фото
-    @property
-    def get_photo_url(self):
-        if self.photo and hasattr(self.photo, 'url'):
-            return self.photo.url
-        return staticfiles_storage.url('images/no_photo.jpg')
