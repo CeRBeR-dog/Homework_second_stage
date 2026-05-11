@@ -50,7 +50,7 @@ class ProductAdmin(admin.ModelAdmin):
     save_on_top = True
 
     def get_main_photo(self, obj):
-        main_img = obj.photos.filter(main_img=True).first() or obj.photos.first()
+        main_img = obj.product.filter(main_img=True).first() or obj.product.first()
         if main_img and main_img.image:
             return mark_safe(f'<img src="{main_img.image.url}" width="50" style="border-radius:5px;" />')
         return "❌"

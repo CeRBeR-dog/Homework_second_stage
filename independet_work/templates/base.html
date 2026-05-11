@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Свечи nazare_by {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Prata&display=swap" rel="stylesheet">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+    <header>
+
+        <nav>
+            <ul class="main-menu">
+                {% block main_menu %}{% endblock %}
+            </ul>
+        </nav>
+    
+    </header>
+
+    <main>
+
+        <section class="info">
+            {% block content_head %}{% endblock %}
+
+            {% block content_section %}{% endblock %}
+        </section>
+
+        {% block content %}{% endblock %}
+
+    </main>
+    
+    <aside>
+
+        {% block sidebar %}{% endblock %}
+        {% block paginator %}{% endblock %}
+    
+    </aside>
+
+    <footer>
+
+        {% block footer %}{% endblock %}
+
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
